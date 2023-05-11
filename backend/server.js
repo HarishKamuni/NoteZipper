@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const notes = require("./data/demoData")
+const notes = require("./data/demoData");
+const geomap = require("./GeoMap.json")
 
 dotenv.config();
 const PORT = process.env.PORT || 5500;
@@ -17,6 +18,16 @@ app.get("/api/notes/:id", (req, res) => {
     const note = notes.find((n) => n.id === req.params.id);
     // console.log(req.params)
     res.send(note);
+})
+
+app.get("/api/geomap", async (req, res) => {
+    try {
+        await res.json(geomap);
+
+    } catch (error) {
+        res.send(error)
+    }
+    
 })
 
 app.listen(PORT, () => {
